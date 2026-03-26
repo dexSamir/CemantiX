@@ -1,0 +1,12 @@
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/bin/Debug/net8.0/SemantiX.Domain.deps.json
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/bin/Debug/net8.0/SemantiX.Domain.dll
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/bin/Debug/net8.0/SemantiX.Domain.pdb
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/obj/Debug/net8.0/SemantiX.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/obj/Debug/net8.0/SemantiX.Domain.AssemblyInfoInputs.cache
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/obj/Debug/net8.0/SemantiX.Domain.AssemblyInfo.cs
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/obj/Debug/net8.0/SemantiX.Domain.csproj.CoreCompileInputs.cache
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/obj/Debug/net8.0/SemantiX.Domain.sourcelink.json
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/obj/Debug/net8.0/SemantiX.Domain.dll
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/obj/Debug/net8.0/refint/SemantiX.Domain.dll
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/obj/Debug/net8.0/SemantiX.Domain.pdb
+/Users/samirhebibov/Documents/CemantiX/backend/src/SemantiX.Domain/obj/Debug/net8.0/ref/SemantiX.Domain.dll

@@ -78,7 +78,7 @@ public class GameRoomService : IGameRoomService
             return new JoinRoomResultDto(true, roomCode, null, MapToDto(room));
 
         room.RoomPlayers.Add(new RoomPlayer { PlayerId = playerId, IsHost = false });
-        await _uow.UpdateAsync(room, ct);
+        await _uow.GameRooms.UpdateAsync(room, ct);
         await _uow.SaveChangesAsync(ct);
 
         return new JoinRoomResultDto(true, roomCode, null, MapToDto(room));

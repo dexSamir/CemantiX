@@ -40,11 +40,31 @@ public class LeaderboardService : ILeaderboardService
         await _uow.Leaderboard.AddOrUpdateEntryAsync(entry, ct);
 
         // Həftəlik üçün ayrıca
-        var weeklyEntry = entry with { Id = Guid.NewGuid(), Period = "weekly" };
+        var weeklyEntry = new LeaderboardEntry
+        {
+            Id = Guid.NewGuid(),
+            PlayerId = dto.PlayerId,
+            Username = dto.Username,
+            Score = dto.Score,
+            AttemptCount = dto.AttemptCount,
+            Duration = dto.Duration,
+            GameMode = dto.GameMode,
+            Period = "weekly"
+        };
         await _uow.Leaderboard.AddOrUpdateEntryAsync(weeklyEntry, ct);
 
         // Alltime
-        var alltimeEntry = entry with { Id = Guid.NewGuid(), Period = "alltime" };
+        var alltimeEntry = new LeaderboardEntry
+        {
+            Id = Guid.NewGuid(),
+            PlayerId = dto.PlayerId,
+            Username = dto.Username,
+            Score = dto.Score,
+            AttemptCount = dto.AttemptCount,
+            Duration = dto.Duration,
+            GameMode = dto.GameMode,
+            Period = "alltime"
+        };
         await _uow.Leaderboard.AddOrUpdateEntryAsync(alltimeEntry, ct);
 
         await _uow.SaveChangesAsync(ct);

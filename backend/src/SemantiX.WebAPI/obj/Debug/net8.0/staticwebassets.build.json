@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "dDgGk13Qt4Tmbb5YoLJC3qYCx+vkEzpQKxyEjTHayEw=",
+  "Source": "SemantiX.WebAPI",
+  "BasePath": "_content/SemantiX.WebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/SemantiX.WebAPI.props" />
+</Project>
