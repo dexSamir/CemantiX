@@ -1,0 +1,80 @@
+version: "3.8"
+
+services:
+  # === .NET 8 Backend API + SignalR ===
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: semantix-api
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=semantix;Username=postgres;Password=${POSTGRES_PASSWORD:-semantix123}
+      - AiService__BaseUrl=http://ai-service:8000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      - semantix-net
+
+  # === Python AI Microservice ===
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: semantix-ai
+    ports:
+      - "8000:8000"
+    environment:
+      - FASTTEXT_MODEL_PATH=data/cc.az.300.bin
+      - WORD_BANK_PATH=data/az_words.txt
+    volumes:
+      - ai-model-data:/app/data
+    networks:
+      - semantix-net
+
+  # === PostgreSQL 16 ===
+  postgres:
+    image: postgres:16-alpine
+    container_name: semantix-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: semantix
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-semantix123}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - semantix-net
+
+  # === Redis 7 (Cache) ===
+  redis:
+    image: redis:7-alpine
+    container_name: semantix-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - semantix-net
+
+volumes:
+  postgres-data:
+  redis-data:
+  ai-model-data:
+
+networks:
+  semantix-net:
+    driver: bridge
