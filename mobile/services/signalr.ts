@@ -3,12 +3,9 @@ import { Platform } from 'react-native';
 
 const getHubUrl = (): string => {
     if (__DEV__) {
-        if (Platform.OS === 'android') {
-          return 'http://10.0.2.2:5000/hubs/game';
-        } 
-        return 'http://localhost:5000/hubs/game';
+        return 'https://semantix-api.onrender.com/hubs/game';
     }
-    return 'https://api.cemantix.com/hubs/game'; 
+    return 'https://semantix-api.onrender.com/hubs/game'; 
 };
 
 export class SignalRService {

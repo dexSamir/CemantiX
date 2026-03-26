@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SemantiX.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a76bcfb197c5309867f5b3550bc62701bce7882")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+21eddf48008e4a0af10c5fb9df60baf9c2269f30")]
 [assembly: System.Reflection.AssemblyProductAttribute("SemantiX.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SemantiX.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

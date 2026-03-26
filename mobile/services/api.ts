@@ -6,12 +6,10 @@ import { Platform } from 'react-native';
 const getBaseUrl = (): string => {
   // Can be configured via env
   if (__DEV__) {
-    if (Platform.OS === 'android') {
-      return 'http://10.0.2.2:5000/api';
-    } 
-    return 'http://localhost:5000/api';
+    // If you want to test remote server even in dev mode, return the production link:
+    return 'https://semantix-api.onrender.com/api';
   }
-  return 'https://api.cemantix.com/api'; // Prod URL
+  return 'https://semantix-api.onrender.com/api'; // Prod URL
 };
 
 export const API_URL = getBaseUrl();
