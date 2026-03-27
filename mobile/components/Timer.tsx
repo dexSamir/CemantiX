@@ -32,7 +32,7 @@ export const Timer: React.FC<Props> = ({ initialSeconds, onTimeUp, isRunning }) 
     };
   }, [isRunning, secondsLeft, onTimeUp]);
 
-  const progressStyle = {
+  const progressStyle: any = {
     width: `${(secondsLeft / initialSeconds) * 100}%`,
     backgroundColor: secondsLeft <= 10 ? COLORS.error : COLORS.primary,
   };

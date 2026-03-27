@@ -86,7 +86,7 @@ export default function BattleGame() {
     return (
       <View style={styles.center}>
         <Text style={styles.title}>Battle Rejimi</Text>
-        <Text style={styles.text} onPress={handleCreateRoom} style={styles.btn}>Otaq Yarat</Text>
+        <Text onPress={handleCreateRoom} style={[styles.text, styles.btn]}>Otaq Yarat</Text>
       </View>
     );
   }

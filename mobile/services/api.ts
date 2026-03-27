@@ -21,22 +21,39 @@ export interface JoinRoomResult {
     room?: any;
 }
 
+export const safeFetch = async (url: string, options?: RequestInit) => {
+  const response = await fetch(url, options);
+  const text = await response.text();
+  
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    // If it's not JSON, handle as text
+    if (!response.ok) {
+      throw new Error(text || `Server xətası (${response.status})`);
+    }
+    return text;
+  }
+
+  if (!response.ok) {
+    throw new Error(data.error || data.message || data.errorMessage || `Xəta (${response.status})`);
+  }
+  return data;
+};
+
 export const registerPlayer = async (username: string) => {
-  const response = await fetch(`${API_URL}/player/register`, {
+  return safeFetch(`${API_URL}/player/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username }),
   });
-  if (!response.ok) throw new Error('Qeydiyyat xətası');
-  return response.json();
 };
 
 export const createRoom = async (gameMode: number, hostPlayerId: string, isPrivate: boolean = false) => {
-  const response = await fetch(`${API_URL}/game/create-room`, {
+  return safeFetch(`${API_URL}/game/create-room`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ gameMode, hostPlayerId, isPrivate }),
   });
-  if (!response.ok) throw new Error('Otaq yaradılarkən xəta');
-  return response.json();
 };

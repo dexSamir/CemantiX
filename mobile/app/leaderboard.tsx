@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, ActivityIndicator, FlatList } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
-import { API_URL } from '../services/api';
+import { API_URL, safeFetch } from '../services/api';
 
 interface LeaderboardEntry {
   rank: number;
@@ -18,12 +18,9 @@ export default function Leaderboard() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const res = await fetch(`${API_URL}/Leaderboard/Solo/alltime`);
-        if (res.ok) {
-          const data = await res.json();
-          setEntries(data);
-        }
-      } catch (err) {
+        const data = await safeFetch(`${API_URL}/Leaderboard/Solo/alltime`);
+        setEntries(data);
+      } catch (err: any) {
         console.error('Liderlər tablosu yüklənərkən xəta:', err);
       } finally {
         setLoading(false);

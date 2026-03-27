@@ -4,7 +4,7 @@ import { COLORS } from '../../constants/theme';
 import { GuessInput } from '../../components/GuessInput';
 import { GuessList, GuessItem } from '../../components/GuessList';
 import { ColorBar } from '../../components/ColorBar';
-import { API_URL } from '../../services/api';
+import { API_URL, createRoom, safeFetch } from '../../services/api';
 
 export default function SoloGame() {
   const [roomId, setRoomId] = useState<string | null>(null);
@@ -15,49 +15,56 @@ export default function SoloGame() {
   // Fake PlayerId for demo (in a real app, use Context or AsyncStore)
   const defaultPlayerId = '00000000-0000-0000-0000-000000000001'; 
 
+  useEffect(() => {
+    const initGame = async () => {
+      try {
+        setLoading(true);
+        // Mode 0 = Solo
+        const res = await createRoom(0, defaultPlayerId);
+        if (res && res.id) {
+          setRoomId(res.id);
+        } else if (res && res.roomCode) {
+          setRoomId(res.roomCode);
+        }
+      } catch (err: any) {
+        console.error('Otaq yaradılarkən xəta:', err);
+        Alert.alert('Xəta', 'Oyun başladılarkən xəta: ' + err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    initGame();
+  }, []);
+
   const handleGuess = async (word: string) => {
-    if (isWon) return;
+    if (isWon || !roomId) return;
     setLoading(true);
 
     try {
-      // For solo play without room creation overhead for now, wait for game backend enhancements 
-      // where we just submit to /similarity directly, but since we designed it room-based
-      // we'll assume the room is already created in a full implementation, or we mock it.
-      // For this demo structure, we use a mocked response if room doesn't exist yet,
-      // but ideally we'd hit the API.
-      
-      const res = await fetch(`${API_URL}/Game/guess`, {
+      const data = await safeFetch(`${API_URL}/Game/guess`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        // Room ID is hardcoded for simple solo mock, must be dynamic in real build
-        body: JSON.stringify({ roomId: defaultPlayerId, playerId: defaultPlayerId, word })
+        body: JSON.stringify({ roomId: roomId, playerId: defaultPlayerId, word })
       });
       
-      const data = await res.json();
+      const newItem: GuessItem = {
+        id: data.word,
+        word: data.word,
+        rank: data.rank,
+        colorCategory: data.colorCategory,
+        isCorrect: data.isCorrect,
+        lieMessage: data.lieMessage
+      };
       
-      if (res.ok) {
-        const newItem: GuessItem = {
-          id: data.word,
-          word: data.word,
-          rank: data.rank,
-          colorCategory: data.colorCategory,
-          isCorrect: data.isCorrect,
-          lieMessage: data.lieMessage
-        };
-        
-        setGuesses(prev => [newItem, ...prev]);
-        
-        if (data.isCorrect) {
-          setIsWon(true);
-          Alert.alert('Təbriklər! 🎉', 'Sözü tapdınız: ' + data.word.toUpperCase());
-        }
-      } else {
-        // Fallback or error handling
-        Alert.alert('Xəta', data.error || 'Söz yoxlanılarkən xəta baş verdi');
+      setGuesses(prev => [newItem, ...prev]);
+      
+      if (data.isCorrect) {
+        setIsWon(true);
+        Alert.alert('Təbriklər! 🎉', 'Sözü tapdınız: ' + data.word.toUpperCase());
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      Alert.alert('Xəta', 'Şəbəkə xətası.');
+      Alert.alert('Xəta', err.message || 'Şəbəkə xətası.');
     } finally {
       setLoading(false);
     }
